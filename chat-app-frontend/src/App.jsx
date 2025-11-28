@@ -24,11 +24,35 @@ export default function App() {
     setUsername("");
   };
 
+  // Check if server restarted by verifying server connection on app load
   useEffect(() => {
-    const storedToken = localStorage.getItem("token") || "";
-    const storedUsername = localStorage.getItem("username") || "";
-    setToken(storedToken);
-    setUsername(storedUsername);
+    const checkServerConnection = async () => {
+      try {
+        // Try to fetch from backend to verify server is running
+        const response = await fetch("http://localhost:5000/api/auth/users", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        // If token is invalid or server returned 401, clear session
+        if (response.status === 401 || !response.ok) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          setToken("");
+          setUsername("");
+        }
+      } catch (error) {
+        // Server is down or unreachable - clear session to require fresh login
+        console.log("Server unreachable - clearing session");
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        setToken("");
+        setUsername("");
+      }
+    };
+
+    checkServerConnection();
   }, []);
 
   if (!token) {
