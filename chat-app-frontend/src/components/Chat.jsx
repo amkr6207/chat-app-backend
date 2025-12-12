@@ -4,6 +4,8 @@ import axiosInstance from "../api/auth";
 import { fetchUsers } from "../api/users";
 import { jwtDecode } from "jwt-decode";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Chat({ token, username, onLogout }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -71,7 +73,7 @@ export default function Chat({ token, username, onLogout }) {
   // Socket connection with token auth
   useEffect(() => {
     if (!token || !userId) return;
-    const socket = io("http://localhost:5000", {
+    const socket = io(API_URL, {
       auth: { token },
     });
     socketRef.current = socket;

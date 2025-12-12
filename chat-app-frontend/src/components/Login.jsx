@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function Login({ onLogin }) {
+const API_URL = import.meta.env.VITE_API_URL;
+
+export default function Login({ onLogin, onToggleMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,7 +14,7 @@ export default function Login({ onLogin }) {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -82,7 +84,10 @@ export default function Login({ onLogin }) {
 
       <p className="text-center text-gray-400 text-sm mt-6">
         Don't have an account?{" "}
-        <span className="text-teal-400 font-semibold cursor-pointer hover:text-teal-300">
+        <span
+          onClick={onToggleMode}
+          className="text-teal-400 font-semibold cursor-pointer hover:text-teal-300"
+        >
           Register here
         </span>
       </p>

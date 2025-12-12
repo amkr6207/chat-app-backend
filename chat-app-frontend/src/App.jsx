@@ -3,6 +3,8 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Chat from "./components/Chat";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [username, setUsername] = useState(
@@ -29,7 +31,7 @@ export default function App() {
     const checkServerConnection = async () => {
       try {
         // Try to fetch from backend to verify server is running
-        const response = await fetch("http://localhost:5000/api/auth/users", {
+        const response = await fetch(`${API_URL}/api/auth/users`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -106,21 +108,19 @@ export default function App() {
             <div className="flex gap-4 backdrop-blur-sm">
               <button
                 onClick={() => setIsLoginMode(true)}
-                className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
-                  isLoginMode
-                    ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xl"
-                    : "bg-slate-800/50 text-gray-300 border border-slate-700 hover:bg-slate-700/50"
-                }`}
+                className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${isLoginMode
+                  ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xl"
+                  : "bg-slate-800/50 text-gray-300 border border-slate-700 hover:bg-slate-700/50"
+                  }`}
               >
                 🔓 Sign In
               </button>
               <button
                 onClick={() => setIsLoginMode(false)}
-                className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
-                  !isLoginMode
-                    ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xl"
-                    : "bg-slate-800/50 text-gray-300 border border-slate-700 hover:bg-slate-700/50"
-                }`}
+                className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${!isLoginMode
+                  ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xl"
+                  : "bg-slate-800/50 text-gray-300 border border-slate-700 hover:bg-slate-700/50"
+                  }`}
               >
                 ✨ Sign Up
               </button>
@@ -128,7 +128,14 @@ export default function App() {
 
             {/* Forms Container */}
             <div className="w-full max-w-md">
-              {isLoginMode ? <Login onLogin={handleLogin} /> : <Register />}
+              {isLoginMode ? (
+                <Login
+                  onLogin={handleLogin}
+                  onToggleMode={() => setIsLoginMode(false)}
+                />
+              ) : (
+                <Register onToggleMode={() => setIsLoginMode(true)} />
+              )}
             </div>
           </div>
 

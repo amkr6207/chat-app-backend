@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../api/auth";
 
-export default function Register() {
+export default function Register({ onToggleMode }) {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -41,11 +41,10 @@ export default function Register() {
 
       {message && (
         <div
-          className={`p-4 rounded-lg mb-6 text-center font-semibold text-sm transition-all duration-300 ${
-            message.includes("✅")
+          className={`p-4 rounded-lg mb-6 text-center font-semibold text-sm transition-all duration-300 ${message.includes("✅")
               ? "bg-green-500/20 text-green-300 border border-green-500/50"
               : "bg-red-500/20 text-red-300 border border-red-500/50"
-          }`}
+            }`}
         >
           {message}
         </div>
@@ -102,7 +101,10 @@ export default function Register() {
 
       <p className="text-center text-gray-400 text-sm mt-6">
         Already have an account?{" "}
-        <span className="text-teal-400 font-semibold cursor-pointer hover:text-teal-300">
+        <span
+          onClick={onToggleMode}
+          className="text-teal-400 font-semibold cursor-pointer hover:text-teal-300"
+        >
           Login here
         </span>
       </p>

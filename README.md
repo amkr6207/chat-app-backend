@@ -1,139 +1,93 @@
-# Chat Application
+# ChatHub 💬
 
-A modern, real-time chat app with **group chat** and **private messaging** built with React, Node.js, Express, MongoDB, and Socket.IO.
+A modern real-time chat application with group chat and private messaging.
 
 ## Features
 
-- 🔐 User authentication (JWT)
-- 💬 Real-time group & private messaging
-- � User list for private chats
-- 📨 Message persistence
-- 🎨 Modern responsive UI (Tailwind CSS)
-- 📱 Mobile-friendly
+- 🔐 JWT Authentication
+- 💬 Real-time Group & Private Messaging
+- 👥 User List for Private Chats
+- 📨 Message Persistence
+- 🎨 Modern Responsive UI
 
 ## Tech Stack
 
-**Backend:** Node.js, Express, MongoDB, Socket.IO, JWT, bcryptjs
-**Frontend:** React 19, Vite, Socket.IO Client, Axios, Tailwind CSS v3
-
-## Prerequisites
-
-- Node.js (v14+)
-- MongoDB (local or Atlas)
+**Backend:** Node.js, Express, MongoDB, Socket.IO, JWT  
+**Frontend:** React 19, Vite, Socket.IO Client, Tailwind CSS
 
 ## Quick Start
 
-### 1. Backend Setup
+### Prerequisites
+- Node.js (v14+)
+- MongoDB (local or Atlas)
 
+### Installation
+
+1. **Clone and Install**
 ```bash
+# Backend
 cd chat-app-backend
 npm install
 cp .env.example .env
-# Edit .env: add MONGO_URI, JWT_SECRET, PORT
-npm run dev
-```
+# Edit .env with your MongoDB URI and JWT secret
+npm start
 
-### 2. Frontend Setup
-
-```bash
+# Frontend (in new terminal)
 cd chat-app-frontend
 npm install
 npm run dev
-# Open http://localhost:5173
 ```
 
-### 3. MongoDB
+2. **Environment Variables**
 
-```bash
-mongod  # or use MongoDB Atlas (cloud)
-```
-
-## Usage
-
-1. **Register** → Enter username, email, password
-2. **Login** → Enter email and password
-3. **Group Chat** → Click "# Group Chat" in sidebar
-4. **Private Chat** → Click a username to chat privately
-5. **Logout** → Click logout button
-
-## API Endpoints
-
-| Method | Endpoint             | Description       |
-| ------ | -------------------- | ----------------- |
-| POST   | `/api/auth/register` | Register user     |
-| POST   | `/api/auth/login`    | Login & get token |
-| GET    | `/api/auth/users`    | Get all users     |
-| GET    | `/api/chat/messages` | Fetch messages    |
-| POST   | `/api/chat/messages` | Send message      |
-
-**Send Message:**
-
-```json
-{
-  "text": "Hello!",
-  "recipientId": "userId", // omit for group chat
-  "recipientName": "username" // omit for group chat
-}
-```
-
-## Socket Events
-
-**Client → Server:**
-
-```javascript
-socket.emit("send_message", {
-  text: "Hello",
-  recipientId: "userId", // optional (for private)
-  recipientName: "username", // optional (for private)
-});
-```
-
-**Server → Client:**
-
-```javascript
-socket.on("receive_message", (message) => {
-  // message received
-});
-```
-
-## Environment Variables
-
-**Backend (.env):**
-
-```
+Backend `.env`:
+```env
 MONGO_URI=mongodb://localhost:27017/chatdb
-JWT_SECRET=your_secret_key
+JWT_SECRET=your_secret_key_here
 PORT=5000
 ```
 
-**Frontend (.env.local - optional):**
+Frontend `.env`:
+```env
+VITE_API_URL=http://localhost:5000
+```
 
-```
-VITE_API_BASE_URL=http://localhost:5000/api
-VITE_SOCKET_URL=http://localhost:5000
-```
+3. **Access**
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:5000
+
+## Usage
+
+1. **Register** a new account
+2. **Login** with your credentials
+3. **Group Chat** - Click "# Group Chat" in sidebar
+4. **Private Chat** - Click any username to start a private conversation
+5. **Logout** - Click the logout button
 
 ## Project Structure
 
 ```
 chat-app/
-├── chat-app-backend/
-│   ├── models/      (User, Message)
-│   ├── routes/      (auth, chat)
-│   ├── middleware/  (auth)
-│   └── index.js     (Socket.IO server)
-├── chat-app-frontend/
-│   ├── src/components/  (Chat, Login, Register)
-│   ├── src/api/         (auth, users)
-│   └── src/App.jsx
-├── .gitignore
-└── README.md
+├── chat-app-backend/       # Node.js + Express + Socket.IO
+│   ├── models/             # MongoDB schemas (User, Message)
+│   ├── routes/             # API routes (auth, chat)
+│   ├── middleware/         # JWT authentication
+│   └── index.js            # Server entry point
+└── chat-app-frontend/      # React + Vite
+    ├── src/components/     # UI components
+    ├── src/api/            # API client
+    └── src/App.jsx         # Main app component
 ```
 
-## Contributing
+## API Endpoints
 
-1. Fork repo
-2. Create branch: `git checkout -b feature/name`
-3. Commit: `git commit -m 'Add feature'`
-4. Push: `git push origin feature/name`
-5. Open PR
+| Method | Endpoint             | Description       |
+|--------|---------------------|-------------------|
+| POST   | `/api/auth/register` | Register user     |
+| POST   | `/api/auth/login`    | Login & get token |
+| GET    | `/api/auth/users`    | Get all users     |
+| GET    | `/api/chat/messages` | Fetch messages    |
+
+## License
+
+MIT
