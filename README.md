@@ -2,6 +2,11 @@
 
 A modern real-time chat application with group chat and private messaging.
 
+## 🚀 Live Links
+
+- **Frontend**: [Chat Application](https://chat-application-frontend-pi-vert.vercel.app)
+- **Backend**: [Server](https://chat-application-backend-ru9x.onrender.com)
+
 ## Features
 
 - 🔐 JWT Authentication
@@ -18,12 +23,14 @@ A modern real-time chat application with group chat and private messaging.
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js (v14+)
 - MongoDB (local or Atlas)
 
 ### Installation
 
 1. **Clone and Install**
+
 ```bash
 # Backend
 cd chat-app-backend
@@ -41,6 +48,7 @@ npm run dev
 2. **Environment Variables**
 
 Backend `.env`:
+
 ```env
 MONGO_URI=mongodb://localhost:27017/chatdb
 JWT_SECRET=your_secret_key_here
@@ -48,11 +56,13 @@ PORT=5000
 ```
 
 Frontend `.env`:
+
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
 3. **Access**
+
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:5000
 
@@ -82,7 +92,7 @@ chat-app/
 ## API Endpoints
 
 | Method | Endpoint             | Description       |
-|--------|---------------------|-------------------|
+| ------ | -------------------- | ----------------- |
 | POST   | `/api/auth/register` | Register user     |
 | POST   | `/api/auth/login`    | Login & get token |
 | GET    | `/api/auth/users`    | Get all users     |
